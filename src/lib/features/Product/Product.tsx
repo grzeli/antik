@@ -11,5 +11,5 @@ interface ProductProps {
 }
 
 export const Product: React.FC<ProductProps> = () => {
-  return <></>
+  return <div></div>
 }
