@@ -1,6 +1,6 @@
 {
   "name": "antik-code-challenge",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "antik code challenge",
   "license": "MIT",
   "author": "Szymon Grzelak (grzeli)",
@@ -33,6 +33,10 @@
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run prettier && npm run lint"
+  },
+  "dependencies": {
+    "styled-components": "^5.3.6",
+    "@types/styled-components": "^5.1.26"
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
