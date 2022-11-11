@@ -1,5 +1,5 @@
 {
-  "include": ["src"],
+  "include": ["src/lib"],
   "exclude": [
     "dist",
     "node_modules"
@@ -10,7 +10,7 @@
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./src",
+    "rootDir": "./src/lib",
     "outDir": "./dist/esm",
     "strict": true,
     "noImplicitReturns": true,
