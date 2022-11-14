@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../../components/Button/Button'
-import { MainComponentProps } from '../Main/Main'
+import { CurrentStepProps } from '../CurrentStep/CurrentStep'
 
-interface ProductPageProps extends MainComponentProps {
+interface ProductPageProps extends CurrentStepProps {
   sharesLeft?: number
 }
 
@@ -90,17 +90,24 @@ export const ProductPage: React.FC<ProductPageProps> = (props) => {
     [setRangeValue],
   )
 
+  const buyBtnOnClickHandler = useCallback(() => {
+    console.log('bought')
+  }, [])
+
   const priceOutput = useMemo(
     () =>
       price * rangeValue > 0 ? (
         <Price>
-          {(price * (rangeValue / 100)).toPrecision(2)} {currency}
+          {(price * (rangeValue / 100)).toFixed(2)} {currency}
         </Price>
       ) : null,
     [price, rangeValue, currency],
   )
 
-  const BuyBtn = useMemo(() => priceOutput && <Button label='Buy' display='block'></Button>, [priceOutput])
+  const BuyBtn = useMemo(
+    () => priceOutput && <Button label='Buy' display='block' onClick={buyBtnOnClickHandler} />,
+    [priceOutput, buyBtnOnClickHandler],
+  )
 
   return (
     <Container id={productId}>

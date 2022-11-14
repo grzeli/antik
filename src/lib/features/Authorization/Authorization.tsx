@@ -3,10 +3,8 @@ import styled from 'styled-components'
 import { Button } from '../../components/Button/Button'
 import { FormElement } from '../../components/FormElement/FormElement'
 import { Spinner } from '../../components/Spinner/Spinner'
-
-interface AuthorizationProps {
-  onSuccess(user: string): void
-}
+import { useAppDispatch } from '../../core/hooks/useRedux'
+import { updateCurrentUserData } from '../../core/store/user'
 
 const ErrorMsg = styled.p`
   color: red;
@@ -16,8 +14,7 @@ const ErrorMsg = styled.p`
   margin: 20px 0 0 0;
 `
 
-export const Authorization: React.FC<AuthorizationProps> = (props) => {
-  const { onSuccess } = props
+export const Authorization: React.FC = () => {
   const [emailAddress, setEmailAddress] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [emailAddressValidity, setEmailAddressValidity] = useState<boolean>(true)
@@ -25,6 +22,7 @@ export const Authorization: React.FC<AuthorizationProps> = (props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [formWasSubmitted, setFormWasSubmitted] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
 
   const validateForm = useCallback(() => {
     setPasswordValidity(!!password.length && password.length > 5)
@@ -33,17 +31,24 @@ export const Authorization: React.FC<AuthorizationProps> = (props) => {
 
   useEffect(() => validateForm(), [emailAddress, password, validateForm])
 
+  const onAuthorizationSuccess = useCallback(
+    (userEmailAddress: string) => {
+      dispatch(updateCurrentUserData(userEmailAddress))
+    },
+    [dispatch],
+  )
+
   const onSubmit = useCallback(() => {
     setFormWasSubmitted(true)
     if (emailAddressValidity && passwordValidity) {
       setIsLoading(true)
       setTimeout(() => {
         setIsLoading(false)
-        onSuccess(emailAddress)
+        onAuthorizationSuccess(emailAddress)
         setError(null)
       }, 1000)
     }
-  }, [emailAddressValidity, passwordValidity, emailAddress, onSuccess])
+  }, [emailAddressValidity, passwordValidity, emailAddress, onAuthorizationSuccess])
 
   const errorMsg = useMemo(() => error && <ErrorMsg>{error}</ErrorMsg>, [error])
 

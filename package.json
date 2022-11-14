@@ -35,8 +35,10 @@
     "prepublishOnly": "npm test && npm run prettier && npm run lint"
   },
   "dependencies": {
-    "styled-components": "^5.3.6",
-    "@types/styled-components": "^5.1.26"
+    "@reduxjs/toolkit": "^1.9.0",
+    "@types/styled-components": "^5.1.26",
+    "react-redux": "^8.0.5",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
