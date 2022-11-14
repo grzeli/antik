@@ -13,7 +13,7 @@ interface ModalProps {
   display?: string
   modalRef?: RefObject<HTMLDivElement>
   width?: string
-  height?: string
+  minHeight?: string
   backgroundColor?: string
   animation?: string | boolean
   padding?: string
@@ -25,7 +25,7 @@ const StyledModal = styled.div<Omit<ModalProps, 'onClose' | 'modalRef' | 'withCl
   position: ${({ position }) => position || 'absolute'};
   display: ${({ display }) => display || 'block'};
   width: ${({ width }) => width || '200px'};
-  height: ${({ height }) => height || '400px'};
+  min-height: ${({ minHeight }) => minHeight || '400px'};
   top: ${({ top }) => top || 'unset'};
   right: ${({ right }) => right || 'unset'};
   bottom: ${({ bottom }) => bottom || 'unset'};
