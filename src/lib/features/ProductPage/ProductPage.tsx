@@ -27,6 +27,7 @@ const Title = styled.h3`
 
 const Image = styled.img`
   max-width: 100%;
+  max-height: 140px;
   object-fit: contain;
   margin: 0 auto 16px auto;
   border-radius: 16px;

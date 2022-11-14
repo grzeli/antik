@@ -76,6 +76,8 @@ export const Authorization: React.FC = () => {
         label='Log in'
         margin='40px auto 0'
         position='static'
+        width='100%'
+        justifyContent='center'
         disabled={(formWasSubmitted && (!emailAddressValidity || !passwordValidity)) || isLoading}
         onClick={onSubmit}
       >

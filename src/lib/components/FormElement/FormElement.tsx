@@ -14,13 +14,14 @@ interface FormElementProps {
 
 const Label = styled.label<Pick<FormElementProps, 'invalid'>>`
   color: ${({ invalid }) => (invalid ? 'red' : '#666666')};
-  font-size: 16px;
+  font-size: 14px;
   line-height: 16px;
   letter-spacing: -0.5px;
+  font-family: Helvetica, sans-serif;
 `
 
 const Input = styled.input<Pick<FormElementProps, 'invalid'>>`
-  max-width: 100%;
+  width: 100%;
   padding: 7px 6px;
   color: ${({ invalid }) => (invalid ? 'red' : '#202223')};
   font-weight: 400;

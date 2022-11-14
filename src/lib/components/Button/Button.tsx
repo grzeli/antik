@@ -27,6 +27,7 @@ interface ButtonProps {
   bottom?: string
   right?: string
   justifyContent?: string
+  width?: string
 }
 
 const ButtonStyled = styled.button<Omit<ButtonProps, 'onClick'>>`
@@ -45,7 +46,7 @@ const ButtonStyled = styled.button<Omit<ButtonProps, 'onClick'>>`
   text-decoration: none;
   text-align: center;
   font-family: ${({ fontFamily }) => fontFamily || 'inherit'};
-  width: auto;
+  width: ${({ width }) => width || 'auto'};
   border: ${({ border }) => border || 'none'};
   top: ${({ top }) => top || 'unset'};
   right: ${({ right }) => right || 'unset'};

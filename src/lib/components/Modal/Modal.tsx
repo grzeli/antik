@@ -24,7 +24,7 @@ interface ModalProps {
 const StyledModal = styled.div<Omit<ModalProps, 'onClose' | 'modalRef' | 'withCloseIcon' | 'children'>>`
   position: ${({ position }) => position || 'absolute'};
   display: ${({ display }) => display || 'block'};
-  width: ${({ width }) => width || '200px'};
+  width: ${({ width }) => width || '240px'};
   min-height: ${({ minHeight }) => minHeight || '400px'};
   top: ${({ top }) => top || 'unset'};
   right: ${({ right }) => right || 'unset'};
@@ -39,6 +39,10 @@ const StyledModal = styled.div<Omit<ModalProps, 'onClose' | 'modalRef' | 'withCl
       : animation};
   padding: ${({ padding }) => padding || '30px 20px 20px'};
   overflow: hidden;
+  box-sizing: border-box;
+  & * {
+    box-sizing: border-box;
+  }
 
   @-webkit-keyframes scale-in-top {
     0% {

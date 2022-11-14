@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { Modal } from '../../components/Modal/Modal'
+import { PaymentTypeEnum } from '../../core/enums/PaymentTypeEnum'
 import { useAppDispatch, useAppSelector } from '../../core/hooks/useRedux'
 import { Product } from '../../core/interfaces/Product/Product'
+import { setPaymentProductData, setPaymentType } from '../../core/store/payment'
 import { updateProductData } from '../../core/store/productSlice'
 import { updateCurrentUserData } from '../../core/store/user'
 import { Authorization } from '../Authorization/Authorization'
+import { PastPayment } from '../PastPayment/PastPayment'
 import { Payment } from '../Payment/Payment'
 import { ProductPage } from '../ProductPage/ProductPage'
 
@@ -43,6 +46,8 @@ export const CurrentStep: React.FC<CurrentStepProps> = (props) => {
       onModalClose()
     }
     dispatch(updateCurrentUserData(''))
+    dispatch(setPaymentProductData({}))
+    dispatch(setPaymentType(null))
   }, [onModalClose, dispatch])
 
   const modal = useMemo(
@@ -50,7 +55,10 @@ export const CurrentStep: React.FC<CurrentStepProps> = (props) => {
       <Modal withCloseIcon onClose={onClose}>
         {!currentUser && !paymentType && <Authorization />}
         {!!currentUser && !paymentType && <ProductPage {...props} />}
-        {paymentType && <Payment />}
+        {paymentType && !![PaymentTypeEnum.Draft, PaymentTypeEnum.New].includes(paymentType) && <Payment />}
+        {paymentType && !![PaymentTypeEnum.Paid, PaymentTypeEnum.PaidPartially].includes(paymentType) && (
+          <PastPayment />
+        )}
       </Modal>
     ),
     [onClose, currentUser, props, paymentType],

@@ -6,7 +6,7 @@ import { PaymentTypeEnum } from '../../core/enums/PaymentTypeEnum'
 import { useAppDispatch, useAppSelector } from '../../core/hooks/useRedux'
 import { Product } from '../../core/interfaces/Product/Product'
 import { ProductOwner } from '../../core/interfaces/ProductOwner/ProductOwner'
-import { setPaymentType } from '../../core/store/payment'
+import { setPaymentType, setProductOwners } from '../../core/store/payment'
 
 const Title = styled.h3`
   font-size: 12px;
@@ -123,6 +123,7 @@ export const Payment: React.FC = () => {
           } else {
             dispatch(setPaymentType(PaymentTypeEnum.Paid))
           }
+          dispatch(setProductOwners(requestResponse.owners))
           setIsLoading(false)
         } catch (err) {
           setError(err as string)
@@ -134,7 +135,7 @@ export const Payment: React.FC = () => {
 
   const onPayment = useCallback(() => {
     const requestObject: Product = {
-      productId: product.productId,
+      ...product,
       owners: [
         {
           owner: currentUser,
@@ -144,7 +145,7 @@ export const Payment: React.FC = () => {
     }
     setIsLoading(true)
     mockedPaymentRequest(requestObject)
-  }, [currentUser, product?.productId, product?.sharesTaken, mockedPaymentRequest])
+  }, [currentUser, product, mockedPaymentRequest])
 
   const errorOutput = useMemo(() => error.length && 'something went wrong, please try again', [error])
 
