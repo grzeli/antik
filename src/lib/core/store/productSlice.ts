@@ -14,12 +14,9 @@ export const productSlice = createSlice({
     updateProductData: (state, action: PayloadAction<Product>) => {
       state.product = action.payload
     },
-    updateProductShares: (state, action: PayloadAction<number>) => {
-      state.product.sharesTaken = action.payload
-    },
   },
 })
 
-export const { updateProductData, updateProductShares } = productSlice.actions
+export const { updateProductData } = productSlice.actions
 
 export default productSlice.reducer

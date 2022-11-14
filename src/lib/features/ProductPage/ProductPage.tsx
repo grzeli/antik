@@ -1,6 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../../components/Button/Button'
+import { PaymentTypeEnum } from '../../core/enums/PaymentTypeEnum'
+import { useAppDispatch, useAppSelector } from '../../core/hooks/useRedux'
+import { setPaymentProductData, setPaymentType } from '../../core/store/payment'
 import { CurrentStepProps } from '../CurrentStep/CurrentStep'
 
 interface ProductPageProps extends CurrentStepProps {
@@ -77,6 +80,8 @@ const SharesInput = styled.input`
 export const ProductPage: React.FC<ProductPageProps> = (props) => {
   const { title, description, productId, image, imageAlt, price, currency, sharesLeft } = props
   const [rangeValue, setRangeValue] = useState<number>(sharesLeft ? 100 - sharesLeft : 0)
+  const dispatch = useAppDispatch()
+  const { product } = useAppSelector((store) => store.product)
 
   const rangeValueHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,8 +96,14 @@ export const ProductPage: React.FC<ProductPageProps> = (props) => {
   )
 
   const buyBtnOnClickHandler = useCallback(() => {
-    console.log('bought')
-  }, [])
+    dispatch(setPaymentType(PaymentTypeEnum.New))
+    dispatch(
+      setPaymentProductData({
+        ...product,
+        sharesTaken: rangeValue,
+      }),
+    )
+  }, [dispatch, rangeValue, product])
 
   const priceOutput = useMemo(
     () =>

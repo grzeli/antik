@@ -26,6 +26,7 @@ interface ButtonProps {
   left?: string
   bottom?: string
   right?: string
+  justifyContent?: string
 }
 
 const ButtonStyled = styled.button<Omit<ButtonProps, 'onClick'>>`
@@ -53,6 +54,7 @@ const ButtonStyled = styled.button<Omit<ButtonProps, 'onClick'>>`
   position: ${({ position }) => position || 'inherit'};
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
   opacity: ${({ disabled }) => disabled && 0.5};
+  justify-content: ${({ justifyContent }) => justifyContent};
 
   &:hover {
     transform: scale(1.05);

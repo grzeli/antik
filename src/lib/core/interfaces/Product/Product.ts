@@ -1,3 +1,5 @@
+import { ProductOwner } from '../ProductOwner/ProductOwner'
+
 export interface Product {
   productId?: string
   price?: number
@@ -7,4 +9,5 @@ export interface Product {
   image?: string
   imageAlt?: string
   sharesTaken?: number
+  owners?: ProductOwner[]
 }
