@@ -18,7 +18,7 @@ interface AntikCodeChallengeProps {
 }
 
 export const AntikCodeChallenge: React.FC<AntikCodeChallengeProps> = (props) => {
-  const { customButton, defaultButtonProps } = props
+  const { customButton, defaultButtonProps, ...restProps } = props
   const [showModal, setShowModal] = useState<boolean>(false)
 
   const toggleShowModalState = useCallback(() => {
@@ -35,7 +35,7 @@ export const AntikCodeChallenge: React.FC<AntikCodeChallengeProps> = (props) => 
   const button = useMemo(
     () =>
       customButton ? (
-        <>{customButton}</>
+        <span onClick={toggleShowModalState}>{customButton}</span>
       ) : (
         <Button {...defaultButtonProps} label={defaultButtonProps?.label || 'Buy'} onClick={toggleShowModalState} />
       ),
@@ -47,7 +47,7 @@ export const AntikCodeChallenge: React.FC<AntikCodeChallengeProps> = (props) => 
       {button}
       {showModal && (
         <Provider store={store}>
-          <Main {...props} onModalClose={toggleShowModalState} />
+          <Main {...restProps} onModalClose={toggleShowModalState} />
         </Provider>
       )}
     </>
