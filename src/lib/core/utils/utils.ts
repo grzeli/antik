@@ -1,15 +1,8 @@
-import { ProductOwner } from './../interfaces/ProductOwner/ProductOwner'
 import { Product } from './../interfaces/Product/Product'
 
-export const prepareAndDownloadFile = (data: Product, currentUser?: string) => {
+export const prepareAndDownloadFile = (data: Product) => {
   if (!data || !Object.values(data).length) {
     return
-  }
-
-  if (currentUser && data.owners?.length) {
-    data.owners = data.owners.map((el: ProductOwner) =>
-      el.owner !== currentUser ? { owner: window.btoa(el.owner), shares: el.shares } : el,
-    )
   }
 
   const blob = new Blob([JSON.stringify(data)], { type: 'text/json' })

@@ -111,8 +111,8 @@ export const Payment: React.FC = () => {
       setTimeout(() => {
         try {
           localStorage.setItem(product.productId as string, JSON.stringify(requestObject))
-          // BE is performing payment process and it's returning response with current Object data
-          // we need here to get information about left shares of the Object to determine what has to happen next
+          // BE is performing payment process and it's returning response with current Product data
+          // we need here to get information about left shares of the Product to determine what has to happen next
           const requestResponse: Product = JSON.parse(localStorage.getItem(product.productId as string) as string)
           if (!requestResponse.owners?.length) {
             return
@@ -136,12 +136,17 @@ export const Payment: React.FC = () => {
   const onPayment = useCallback(() => {
     const requestObject: Product = {
       ...product,
-      owners: [
-        {
-          owner: currentUser,
-          shares: product.sharesTaken as number,
-        },
-      ],
+    }
+    const currentUserData = {
+      owner: currentUser,
+      shares: product.sharesTaken as number,
+    }
+
+    if (requestObject.owners) {
+      requestObject.owners = [...requestObject.owners, currentUserData]
+      requestObject.sharesTaken = requestObject.owners.reduce((acc: number, curr: ProductOwner) => acc + curr.shares, 0)
+    } else {
+      requestObject.owners = [currentUserData]
     }
     setIsLoading(true)
     mockedPaymentRequest(requestObject)

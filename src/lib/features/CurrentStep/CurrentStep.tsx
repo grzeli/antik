@@ -4,14 +4,13 @@ import { PaymentTypeEnum } from '../../core/enums/PaymentTypeEnum'
 import { useAppDispatch, useAppSelector } from '../../core/hooks/useRedux'
 import { Product } from '../../core/interfaces/Product/Product'
 import { setPaymentProductData, setPaymentType } from '../../core/store/payment'
-import { updateProductData } from '../../core/store/productSlice'
 import { updateCurrentUserData } from '../../core/store/user'
 import { Authorization } from '../Authorization/Authorization'
 import { PastPayment } from '../PastPayment/PastPayment'
 import { Payment } from '../Payment/Payment'
 import { ProductPage } from '../ProductPage/ProductPage'
 
-export interface CurrentStepProps {
+export interface CurrentStepProps extends Product {
   productId: string
   price: number
   currency: string
@@ -37,9 +36,11 @@ export const CurrentStep: React.FC<CurrentStepProps> = (props) => {
       description: props.description,
       image: props.image,
       imageAlt: props.imageAlt,
+      sharesTaken: props.sharesTaken,
+      owners: props.owners,
     }
-    dispatch(updateProductData(data))
-  }, [])
+    dispatch(setPaymentProductData(data))
+  }, [props, dispatch])
 
   const onClose = useCallback(() => {
     if (onModalClose) {
@@ -54,11 +55,10 @@ export const CurrentStep: React.FC<CurrentStepProps> = (props) => {
     () => (
       <Modal withCloseIcon onClose={onClose}>
         {!currentUser && !paymentType && <Authorization />}
-        {!!currentUser && !paymentType && <ProductPage {...props} />}
+        {!!currentUser && !paymentType && (!props.sharesTaken || props.sharesTaken < 100) && <ProductPage {...props} />}
         {paymentType && !![PaymentTypeEnum.Draft, PaymentTypeEnum.New].includes(paymentType) && <Payment />}
-        {paymentType && !![PaymentTypeEnum.Paid, PaymentTypeEnum.PaidPartially].includes(paymentType) && (
-          <PastPayment />
-        )}
+        {((paymentType && !![PaymentTypeEnum.Paid, PaymentTypeEnum.PaidPartially].includes(paymentType)) ||
+          (!!currentUser && props.sharesTaken === 100)) && <PastPayment />}
       </Modal>
     ),
     [onClose, currentUser, props, paymentType],

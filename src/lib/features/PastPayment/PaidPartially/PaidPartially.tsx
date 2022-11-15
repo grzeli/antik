@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../../../components/Button/Button'
+import { AntikCodeChallenge } from '../../../core/enums/AntikCodeChallengeEnum'
 import { useAppSelector } from '../../../core/hooks/useRedux'
 import { ProductOwner } from '../../../core/interfaces/ProductOwner/ProductOwner'
 
@@ -42,7 +43,11 @@ export const PaidPartially: React.FC = () => {
   const [urlCopied, setUrlCopied] = useState<boolean>(false)
 
   const shareBtnHandler = useCallback(() => {
-    const url = window.location.href + product.productId
+    let url = window.location.href
+    if (!new URLSearchParams(window.location.search).get(AntikCodeChallenge.Value)) {
+      const searchParam = new URLSearchParams({ antikCodeChallenge: product.productId as string })
+      url = url + '?' + searchParam
+    }
     navigator.clipboard.writeText(url)
     setUrlCopied(true)
   }, [setUrlCopied, product?.productId])
@@ -70,7 +75,7 @@ export const PaidPartially: React.FC = () => {
       <Title>{product.title}</Title>
       <Image src={product.image} alt={product.imageAlt} />
       <InfoText>
-        Congrats! You have bought {currentUserShares}&nbsp;{product.title} shares
+        Congrats! You are owner of {currentUserShares}&nbsp;{product.title} shares
       </InfoText>
       <Button
         label={urlCopied ? 'Link copied!' : 'Share'}

@@ -6,10 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../core/hooks/useRedux'
 import { setPaymentProductData, setPaymentType } from '../../core/store/payment'
 import { CurrentStepProps } from '../CurrentStep/CurrentStep'
 
-interface ProductPageProps extends CurrentStepProps {
-  sharesLeft?: number
-}
-
 const Container = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -78,33 +74,34 @@ const SharesInput = styled.input`
   }
 `
 
-export const ProductPage: React.FC<ProductPageProps> = (props) => {
-  const { title, description, productId, image, imageAlt, price, currency, sharesLeft } = props
-  const [rangeValue, setRangeValue] = useState<number>(sharesLeft ? 100 - sharesLeft : 0)
+export const ProductPage: React.FC<CurrentStepProps> = (props) => {
+  const { title, description, productId, image, imageAlt, price, currency, sharesTaken } = props
+  const [rangeValue, setRangeValue] = useState<number>(0)
   const dispatch = useAppDispatch()
-  const { product } = useAppSelector((store) => store.product)
+  const { product } = useAppSelector((store) => store.payment)
 
   const rangeValueHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = parseInt(e.target.value)
-      if (value > 100) {
+      if (value > 100 || (sharesTaken && value > 100 - sharesTaken)) {
         return
       }
 
       setRangeValue(value)
     },
-    [setRangeValue],
+    [setRangeValue, sharesTaken],
   )
 
   const buyBtnOnClickHandler = useCallback(() => {
-    dispatch(setPaymentType(PaymentTypeEnum.New))
+    // initialize of draft payment for product which previously was partially bought
+    dispatch(setPaymentType(sharesTaken ? PaymentTypeEnum.Draft : PaymentTypeEnum.New))
     dispatch(
       setPaymentProductData({
         ...product,
         sharesTaken: rangeValue,
       }),
     )
-  }, [dispatch, rangeValue, product])
+  }, [dispatch, rangeValue, product, sharesTaken])
 
   const priceOutput = useMemo(
     () =>
@@ -121,32 +118,37 @@ export const ProductPage: React.FC<ProductPageProps> = (props) => {
     [priceOutput, buyBtnOnClickHandler],
   )
 
-  return (
-    <Container id={productId}>
-      <Title>{title || ''}</Title>
-      <Image src={image} alt={imageAlt} />
-      <Description>{description}</Description>
-      <Label htmlFor='range'>Set shares amount:</Label>
-      <input
-        type='range'
-        max={sharesLeft ? sharesLeft : 100}
-        value={rangeValue}
-        min={0}
-        step='1'
-        id='range'
-        onChange={rangeValueHandler}
-      />
-      <SharesInput
-        type='number'
-        id='rangeNumber'
-        value={rangeValue}
-        min={0}
-        max={sharesLeft ? sharesLeft : 100}
-        step='1'
-        onChange={rangeValueHandler}
-      />
-      {priceOutput}
-      {BuyBtn}
-    </Container>
+  const output = useMemo(
+    () => (
+      <Container id={productId}>
+        <Title>{title || ''}</Title>
+        <Image src={image} alt={imageAlt} />
+        <Description>{description}</Description>
+        <Label htmlFor='range'>Set shares amount:</Label>
+        <input
+          type='range'
+          max={sharesTaken ? 100 - sharesTaken : 100}
+          value={rangeValue}
+          min={0}
+          step='1'
+          id='range'
+          onChange={rangeValueHandler}
+        />
+        <SharesInput
+          type='number'
+          id='rangeNumber'
+          value={rangeValue}
+          min={0}
+          max={sharesTaken ? 100 - sharesTaken : 100}
+          step='1'
+          onChange={rangeValueHandler}
+        />
+        {priceOutput}
+        {BuyBtn}
+      </Container>
+    ),
+    [BuyBtn, description, image, imageAlt, priceOutput, productId, rangeValue, rangeValueHandler, sharesTaken, title],
   )
+
+  return <>{output}</>
 }

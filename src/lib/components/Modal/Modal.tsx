@@ -18,6 +18,9 @@ interface ModalProps {
   animation?: string | boolean
   padding?: string
   withCloseIcon?: boolean
+  justifyContent?: string
+  flexDirection?: string
+  alignItems?: string
   onClose?: () => void
 }
 
@@ -40,6 +43,9 @@ const StyledModal = styled.div<Omit<ModalProps, 'onClose' | 'modalRef' | 'withCl
   padding: ${({ padding }) => padding || '30px 20px 20px'};
   overflow: hidden;
   box-sizing: border-box;
+  justify-content: ${({ justifyContent }) => justifyContent || 'none'};
+  flex-direction: ${({ flexDirection }) => flexDirection || 'unset'};
+  align-items: ${({ alignItems }) => alignItems || 'unset'};
   & * {
     box-sizing: border-box;
   }

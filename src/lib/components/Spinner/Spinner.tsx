@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledSpinner = styled.div`
-  color: #ffffff;
-  font-size: 10px;
+const StyledSpinner = styled.div<SpinnerProps>`
+  color: ${({ color }) => color || '#ffffff'};
+  font-size: ${({ fontSize }) => fontSize || '10px'};
   text-indent: -9999em;
   overflow: hidden;
   width: 1em;
@@ -54,5 +54,9 @@ const StyledSpinner = styled.div`
     }
   }
 `
+interface SpinnerProps {
+  color?: string
+  fontSize?: string
+}
 
-export const Spinner: React.FC = () => <StyledSpinner />
+export const Spinner: React.FC<SpinnerProps> = (props) => <StyledSpinner {...props} />
