@@ -8,4 +8,4 @@ export { ProductPage } from './features/ProductPage/ProductPage'
 export { PastPayment } from './features/PastPayment/PastPayment'
 export { FullyPaid } from './features/PastPayment/FullyPaid/FullyPaid'
 export { PaidPartially } from './features/PastPayment/PaidPartially/PaidPartially'
-export { Main } from './features/Main/Main';
+export { Main } from './features/Main/Main'
