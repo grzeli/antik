@@ -37,7 +37,6 @@ export const Main: React.FC<MainProps> = (props) => {
     const searchParam = new URLSearchParams(window.location.search)
     // checking if modal has to be initialized with provided props or has to fetch product and payment data
     if (
-      !props.productId &&
       searchParam?.get(AntikCodeChallenge.Value) &&
       localStorage.getItem(searchParam.get(AntikCodeChallenge.Value) as string)
     ) {
