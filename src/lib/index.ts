@@ -5,3 +5,7 @@ export { Spinner } from './components/Spinner/Spinner'
 export { Authorization } from './features/Authorization/Authorization'
 export { CurrentStep } from './features/CurrentStep/CurrentStep'
 export { ProductPage } from './features/ProductPage/ProductPage'
+export { PastPayment } from './features/PastPayment/PastPayment'
+export { FullyPaid } from './features/PastPayment/FullyPaid/FullyPaid'
+export { PaidPartially } from './features/PastPayment/PaidPartially/PaidPartially'
+export { Main } from './features/Main/Main';
