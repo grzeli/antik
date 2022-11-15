@@ -61,7 +61,7 @@ export const PaidPartially: React.FC = () => {
   }, [product, currentUser])
 
   const guideText = useMemo(
-    () => urlCopied && <InfoText>Send this URL to friends to share {product.title}</InfoText>,
+    () => urlCopied && <InfoText>Send this link to friends to share {product.title}</InfoText>,
     [urlCopied, product?.title],
   )
 
@@ -73,7 +73,7 @@ export const PaidPartially: React.FC = () => {
         Congrats! You have bought {currentUserShares}&nbsp;{product.title} shares
       </InfoText>
       <Button
-        label={urlCopied ? 'URL address copied!' : 'Share'}
+        label={urlCopied ? 'Link copied!' : 'Share'}
         margin='30px 0 0 0'
         justifyContent='center'
         onClick={shareBtnHandler}
