@@ -1,3 +1,3 @@
-export enum AntikCodeChallenge {
+export enum AntikCodeChallengeEnum {
   Value = 'antikCodeChallenge',
 }

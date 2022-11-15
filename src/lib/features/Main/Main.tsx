@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Provider } from 'react-redux'
 import styled from 'styled-components'
 import { Modal } from '../../components/Modal/Modal'
 import { Spinner } from '../../components/Spinner/Spinner'
-import { AntikCodeChallenge } from '../../core/enums/AntikCodeChallengeEnum'
+import { AntikCodeChallengeEnum } from '../../core/enums/AntikCodeChallengeEnum'
+import { useAppDispatch } from '../../core/hooks/useRedux'
 import { Product } from '../../core/interfaces/Product/Product'
-import { store } from '../../core/store'
-import { CurrentStep, CurrentStepProps } from '../CurrentStep/CurrentStep'
+import { setPaymentProductData } from '../../core/store/payment'
+import { CurrentStep } from '../CurrentStep/CurrentStep'
 
 const InfoText = styled.h3`
   font-size: 18px;
@@ -30,30 +30,33 @@ export interface MainProps {
 }
 
 export const Main: React.FC<MainProps> = (props) => {
-  const { onModalClose } = props
-  const [data, setData] = useState<Product>({ ...props })
+  const { onModalClose, ...restProps } = props
+  const [data, setData] = useState<Product>({ ...(restProps as Product) })
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const searchParam = new URLSearchParams(window.location.search)
     // checking if modal has to be initialized with provided props or has to fetch product and payment data
     if (
-      searchParam?.get(AntikCodeChallenge.Value) &&
-      localStorage.getItem(searchParam.get(AntikCodeChallenge.Value) as string)
+      searchParam?.get(AntikCodeChallengeEnum.Value) &&
+      localStorage.getItem(searchParam.get(AntikCodeChallengeEnum.Value) as string) &&
+      props.productId === searchParam?.get(AntikCodeChallengeEnum.Value)
     ) {
       // here I'm mocking request for getting information about current product state
       const productData: Product = JSON.parse(
-        localStorage.getItem(searchParam.get(AntikCodeChallenge.Value) as string) as string,
+        localStorage.getItem(searchParam.get(AntikCodeChallengeEnum.Value) as string) as string,
       )
       if (productData) {
         setData(productData)
+        dispatch(setPaymentProductData(productData))
       }
+    } else {
+      dispatch(setPaymentProductData(data))
     }
   }, [])
 
   const output = useMemo(() => {
-    if (Object.keys(data) && Object.keys(data).length > 1) {
-      return <CurrentStep {...(data as CurrentStepProps)} onModalClose={onModalClose} />
-    } else {
+    if (!data?.productId || !data.price || !data.currency) {
       return (
         <Modal
           withCloseIcon
@@ -69,8 +72,10 @@ export const Main: React.FC<MainProps> = (props) => {
           </InfoText>
         </Modal>
       )
+    } else {
+      return <CurrentStep onModalClose={onModalClose} />
     }
   }, [data, onModalClose])
 
-  return <Provider store={store}>{output}</Provider>
+  return <>{output}</>
 }

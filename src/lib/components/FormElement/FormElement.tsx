@@ -18,6 +18,7 @@ const Label = styled.label<Pick<FormElementProps, 'invalid'>>`
   line-height: 16px;
   letter-spacing: -0.5px;
   font-family: Helvetica, sans-serif;
+  text-align: left;
 `
 
 const Input = styled.input<Pick<FormElementProps, 'invalid'>>`

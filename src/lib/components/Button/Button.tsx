@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 
-interface ButtonProps {
+export interface ButtonProps {
   label: string
   id?: string
   onClick?: () => void

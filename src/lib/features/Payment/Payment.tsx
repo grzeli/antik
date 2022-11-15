@@ -108,12 +108,16 @@ export const Payment: React.FC = () => {
 
   const mockedPaymentRequest = useCallback(
     (requestObject: Product) => {
+      if (!product) {
+        return
+      }
+
       setTimeout(() => {
         try {
-          localStorage.setItem(product.productId as string, JSON.stringify(requestObject))
-          // BE is performing payment process and it's returning response with current Product data
+          localStorage.setItem(product.productId, JSON.stringify(requestObject))
+          // BE is performing payment process and it's returning response with current Product data or error if transaction cannot be proceed eg. product is sold
           // we need here to get information about left shares of the Product to determine what has to happen next
-          const requestResponse: Product = JSON.parse(localStorage.getItem(product.productId as string) as string)
+          const requestResponse: Product = JSON.parse(localStorage.getItem(product.productId) as string)
           if (!requestResponse.owners?.length) {
             return
           }
@@ -130,10 +134,14 @@ export const Payment: React.FC = () => {
         }
       }, 1000)
     },
-    [product?.productId, dispatch],
+    [product, dispatch],
   )
 
   const onPayment = useCallback(() => {
+    if (!product) {
+      return
+    }
+
     const requestObject: Product = {
       ...product,
     }
@@ -172,14 +180,15 @@ export const Payment: React.FC = () => {
   )
 
   const sharesOutput = useMemo(
-    () => (
-      <Title>
-        Shares amount: {product.sharesTaken}% =&nbsp;
-        {((product.price as number) * ((product.sharesTaken as number) / 100)).toFixed(2)}
-        {product.currency}
-      </Title>
-    ),
-    [product.sharesTaken, product.price, product.currency],
+    () =>
+      product && (
+        <Title>
+          Shares amount: {product.sharesTaken}% =&nbsp;
+          {(product.price * ((product.sharesTaken as number) / 100)).toFixed(2)}
+          {product.currency}
+        </Title>
+      ),
+    [product],
   )
 
   const radioButtons = useMemo(
@@ -213,10 +222,10 @@ export const Payment: React.FC = () => {
 
   return (
     <Container>
-      <Title>{product.title}</Title>
-      <Image src={product.image} alt={product.imageAlt} />
+      <Title>{product?.title}</Title>
+      <Image src={product?.image} alt={product?.imageAlt} />
       {sharesOutput}
-      <SharesAmount sharesTaken={product.sharesTaken} />
+      <SharesAmount sharesTaken={product?.sharesTaken} />
       <InfoText>Select payment method:</InfoText>
       {radioButtons}
       {payBtn}

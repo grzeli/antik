@@ -1,9 +1,9 @@
 import { ProductOwner } from '../ProductOwner/ProductOwner'
 
 export interface Product {
-  productId?: string
-  price?: number
-  currency?: string
+  productId: string
+  price: number
+  currency: string
   title?: string
   description?: string
   image?: string

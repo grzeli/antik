@@ -40,14 +40,17 @@ export const FullyPaid: React.FC = () => {
   const { product } = useAppSelector((store) => store.payment)
 
   const downloadCert = useCallback(() => {
+    if (!product) {
+      return
+    }
     prepareAndDownloadFile(product)
   }, [product])
 
   return (
     <Container>
-      <Title>{product.title}</Title>
-      <Image src={product.image} alt={product.imageAlt} />
-      <InfoText>Congrats! {product.title} is fully paid</InfoText>
+      <Title>{product?.title}</Title>
+      <Image src={product?.image} alt={product?.imageAlt} />
+      <InfoText>Congrats! {product?.title || product?.productId} is fully paid</InfoText>
       <Button label='Download cert' margin='30px 0 0 0' justifyContent='center' onClick={downloadCert}></Button>
     </Container>
   )

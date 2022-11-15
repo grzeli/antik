@@ -2,9 +2,9 @@ import React, { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../../components/Button/Button'
 import { PaymentTypeEnum } from '../../core/enums/PaymentTypeEnum'
-import { useAppDispatch, useAppSelector } from '../../core/hooks/useRedux'
+import { useAppDispatch } from '../../core/hooks/useRedux'
+import { Product } from '../../core/interfaces/Product/Product'
 import { setPaymentProductData, setPaymentType } from '../../core/store/payment'
-import { CurrentStepProps } from '../CurrentStep/CurrentStep'
 
 const Container = styled.div`
   display: flex;
@@ -74,11 +74,10 @@ const SharesInput = styled.input`
   }
 `
 
-export const ProductPage: React.FC<CurrentStepProps> = (props) => {
+export const ProductPage: React.FC<Product> = (props) => {
   const { title, description, productId, image, imageAlt, price, currency, sharesTaken } = props
   const [rangeValue, setRangeValue] = useState<number>(0)
   const dispatch = useAppDispatch()
-  const { product } = useAppSelector((store) => store.payment)
 
   const rangeValueHandler = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,17 +96,17 @@ export const ProductPage: React.FC<CurrentStepProps> = (props) => {
     dispatch(setPaymentType(sharesTaken ? PaymentTypeEnum.Draft : PaymentTypeEnum.New))
     dispatch(
       setPaymentProductData({
-        ...product,
+        ...props,
         sharesTaken: rangeValue,
       }),
     )
-  }, [dispatch, rangeValue, product, sharesTaken])
+  }, [dispatch, rangeValue, props, sharesTaken])
 
   const priceOutput = useMemo(
     () =>
-      price * rangeValue > 0 ? (
+      (price as number) * rangeValue > 0 ? (
         <Price>
-          {(price * (rangeValue / 100)).toFixed(2)} {currency}
+          {((price as number) * (rangeValue / 100)).toFixed(2)} {currency}
         </Price>
       ) : null,
     [price, rangeValue, currency],

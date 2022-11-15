@@ -8,7 +8,7 @@ export const prepareAndDownloadFile = (data: Product) => {
   const blob = new Blob([JSON.stringify(data)], { type: 'text/json' })
   const link = document.createElement('a')
 
-  link.download = (data.title as string) + '.json'
+  link.download = (data.title || data.productId) + '.json'
   link.href = window.URL.createObjectURL(blob)
   link.dataset.downloadurl = ['text/json', link.download, link.href].join(':')
 
