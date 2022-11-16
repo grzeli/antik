@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { CloseIcon } from '../../statics/CloseIcon/CloseIcon'
 import { Button } from '../Button/Button'
 
-interface ModalProps {
+export interface ModalProps {
   children?: ReactNode | string
   position?: string
   top?: string
@@ -21,6 +21,7 @@ interface ModalProps {
   justifyContent?: string
   flexDirection?: string
   alignItems?: string
+  textAlign?: string
   onClose?: () => void
 }
 
@@ -46,6 +47,7 @@ const StyledModal = styled.div<Omit<ModalProps, 'onClose' | 'modalRef' | 'withCl
   justify-content: ${({ justifyContent }) => justifyContent || 'none'};
   flex-direction: ${({ flexDirection }) => flexDirection || 'unset'};
   align-items: ${({ alignItems }) => alignItems || 'unset'};
+  text-align: ${({ textAlign }) => textAlign || 'left'};
   & * {
     box-sizing: border-box;
   }

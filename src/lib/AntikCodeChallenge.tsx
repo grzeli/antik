@@ -1,6 +1,7 @@
-import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { Provider } from 'react-redux'
 import { Button, ButtonProps } from './components/Button/Button'
+import { ModalProps } from './components/Modal/Modal'
 import { AntikCodeChallengeEnum } from './core/enums/AntikCodeChallengeEnum'
 import { store } from './core/store'
 import { Main } from './features/Main/Main'
@@ -14,8 +15,11 @@ interface AntikCodeChallengeProps {
   image?: string
   imageAlt?: string
   defaultButtonProps?: ButtonProps
+  modalProps?: ModalProps
   customButton?: ReactNode
 }
+
+export const ModalContext = createContext<ModalProps | null | undefined>(null)
 
 export const AntikCodeChallenge: React.FC<AntikCodeChallengeProps> = (props) => {
   const { customButton, defaultButtonProps, ...restProps } = props
@@ -47,7 +51,9 @@ export const AntikCodeChallenge: React.FC<AntikCodeChallengeProps> = (props) => 
       {button}
       {showModal && (
         <Provider store={store}>
-          <Main {...restProps} onModalClose={toggleShowModalState} />
+          <ModalContext.Provider value={props.modalProps}>
+            <Main {...restProps} onModalClose={toggleShowModalState} />
+          </ModalContext.Provider>
         </Provider>
       )}
     </>

@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
+import { ModalContext } from '../../AntikCodeChallenge'
 import { Modal } from '../../components/Modal/Modal'
 import { Spinner } from '../../components/Spinner/Spinner'
 import { AntikCodeChallengeEnum } from '../../core/enums/AntikCodeChallengeEnum'
@@ -20,6 +21,7 @@ export const CurrentStep: React.FC<CurrentStepProps> = (props) => {
   const { currentUser } = useAppSelector((store) => store.user)
   const { paymentType, product } = useAppSelector((store) => store.payment)
   const dispatch = useAppDispatch()
+  const modalProps = useContext(ModalContext)
 
   const onClose = useCallback(() => {
     if (onModalClose) {
@@ -38,7 +40,7 @@ export const CurrentStep: React.FC<CurrentStepProps> = (props) => {
   const modal = useMemo(
     () =>
       product && Object.keys(product)?.length ? (
-        <Modal withCloseIcon onClose={onClose} data-testid='CurrentStep'>
+        <Modal withCloseIcon onClose={onClose} data-testid='CurrentStep' {...modalProps}>
           {!currentUser && <Authorization />}
           {!!currentUser && !paymentType && (!product.sharesTaken || product.sharesTaken < 100) && (
             <ProductPage {...product} />
@@ -57,6 +59,7 @@ export const CurrentStep: React.FC<CurrentStepProps> = (props) => {
           onClose={onClose}
           alignItems='center'
           flexDirection='column'
+          {...modalProps}
         >
           <Spinner color='#000' fontSize='50px' />
         </Modal>

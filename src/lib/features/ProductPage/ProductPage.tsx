@@ -35,7 +35,7 @@ const Description = styled.p`
   font-family: Helvetica, sans-serif;
   color: #000;
   margin: 0 0 16px 0;
-  text-align: left;
+  text-align: center;
 `
 
 const Price = styled.p`

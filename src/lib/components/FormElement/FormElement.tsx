@@ -19,11 +19,12 @@ const Label = styled.label<Pick<FormElementProps, 'invalid'>>`
   letter-spacing: -0.5px;
   font-family: Helvetica, sans-serif;
   text-align: left;
+  margin-left: 12px;
 `
 
 const Input = styled.input<Pick<FormElementProps, 'invalid'>>`
   width: 100%;
-  padding: 7px 6px;
+  padding: 7px 6px 7px 12px;
   color: ${({ invalid }) => (invalid ? 'red' : '#202223')};
   font-weight: 400;
   font-size: 14px;
@@ -31,7 +32,7 @@ const Input = styled.input<Pick<FormElementProps, 'invalid'>>`
   background: #fff;
   border: 1px solid #a7acb1;
   border-color: ${({ invalid }) => invalid && 'red'};
-  border-radius: 8px;
+  border-radius: 16px;
   font-family: 'arial';
   margin: 1px 0 15px 0;
 
@@ -46,7 +47,7 @@ const Input = styled.input<Pick<FormElementProps, 'invalid'>>`
 `
 
 const InvalidMsg = styled.p`
-  margin: -14px 0 2px 0;
+  margin: -14px 0 2px 12px;
   color: red;
   bottom: 0;
   font-size: 11px;
