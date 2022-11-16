@@ -5,10 +5,10 @@ import { configureStore } from '@reduxjs/toolkit'
 import type { PreloadedState } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 
-import { RootState, AppStore } from '../src/lib/core/store'
-import userReducer from '../src/lib/core/store/user'
-import paymentReducer from '../src/lib/core/store/payment'
-import { ExampleImageSrc } from '../src/lib/statics/ExampleProductImage/ExampleProductImage'
+import { RootState, AppStore } from '../src/core/store'
+import userReducer from '../src/core/store/user'
+import paymentReducer from '../src/core/store/payment'
+import { ExampleImageSrc } from '../src/statics/ExampleProductImage/ExampleProductImage'
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.

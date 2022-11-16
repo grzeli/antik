@@ -3,10 +3,10 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 import 'jest-canvas-mock'
-import { AntikCodeChallenge, Authorization, CurrentStep, Main, PastPayment, Payment, ProductPage } from '../src/lib'
+import { AntikCodeChallenge, Authorization, CurrentStep, Main, PastPayment, Payment, ProductPage } from '../src'
 import { renderWithProviders } from './utils'
-import { store } from '../src/lib/core/store'
-import { PaymentTypeEnum } from '../src/lib/core/enums/PaymentTypeEnum'
+import { store } from '../src/core/store'
+import { PaymentTypeEnum } from '../src/core/enums/PaymentTypeEnum'
 
 const productMock = {
   productId: '123456',

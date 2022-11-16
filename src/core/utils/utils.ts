@@ -5,6 +5,7 @@ export const prepareAndDownloadFile = (data: Product) => {
     return
   }
 
+
   const blob = new Blob([JSON.stringify(data)], { type: 'text/json' })
   const link = document.createElement('a')
 
