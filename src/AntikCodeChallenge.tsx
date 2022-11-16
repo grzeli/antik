@@ -14,8 +14,8 @@ interface AntikCodeChallengeProps {
   description?: string
   image?: string
   imageAlt?: string
-  defaultButtonProps?: ButtonProps
-  modalProps?: ModalProps
+  defaultButtonProps?: Omit<ButtonProps, 'onClick' | 'children'>
+  modalProps?: Omit<ModalProps, 'onClose' | 'modalRef'>
   customButton?: ReactNode
 }
 
