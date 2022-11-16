@@ -32,7 +32,9 @@ describe('Authorization component test', () => {
     renderWithProviders(<Authorization />)
   })
 
-  it('renders without crashing', () => {})
+  it('renders without crashing', () => {
+    screen.debug()
+  })
 
   it('logging in', () => {
     const state = store.getState().user
@@ -52,28 +54,47 @@ describe('Authorization component test', () => {
 
 describe('CurrentStep component test', () => {
   it('renders without crashing', () => {
-    renderWithProviders(<CurrentStep onModalClose={() => {}} />)
+    renderWithProviders(
+      <CurrentStep
+        onModalClose={() => {
+          console.log('')
+        }}
+      />,
+    )
   })
 
   it('renders authorization component', () => {
-    const { getByTestId, container } = renderWithProviders(<CurrentStep onModalClose={() => {}} />)
+    const { getByTestId, container } = renderWithProviders(
+      <CurrentStep
+        onModalClose={() => {
+          console.log('')
+        }}
+      />,
+    )
     const currentStep = getByTestId('CurrentStep')
     expect(currentStep).toBeInTheDocument()
     expect(container.querySelector('#email')).toBeInTheDocument()
   })
 
   it('renders product component', () => {
-    const { getByTestId } = renderWithProviders(<CurrentStep onModalClose={() => {}} />, {
-      preloadedState: {
-        payment: {
-          product: productMock,
-          paymentType: null,
-        },
-        user: {
-          currentUser: 'user@gmail.com',
+    const { getByTestId } = renderWithProviders(
+      <CurrentStep
+        onModalClose={() => {
+          console.log('')
+        }}
+      />,
+      {
+        preloadedState: {
+          payment: {
+            product: productMock,
+            paymentType: null,
+          },
+          user: {
+            currentUser: 'user@gmail.com',
+          },
         },
       },
-    })
+    )
 
     const currentStep = getByTestId('CurrentStep')
     expect(currentStep).toBeInTheDocument()
@@ -81,17 +102,24 @@ describe('CurrentStep component test', () => {
   })
 
   it('renders payment component', () => {
-    const { getByTestId } = renderWithProviders(<CurrentStep onModalClose={() => {}} />, {
-      preloadedState: {
-        payment: {
-          product: productMock,
-          paymentType: PaymentTypeEnum.New,
-        },
-        user: {
-          currentUser: 'user@gmail.com',
+    const { getByTestId } = renderWithProviders(
+      <CurrentStep
+        onModalClose={() => {
+          console.log('')
+        }}
+      />,
+      {
+        preloadedState: {
+          payment: {
+            product: productMock,
+            paymentType: PaymentTypeEnum.New,
+          },
+          user: {
+            currentUser: 'user@gmail.com',
+          },
         },
       },
-    })
+    )
 
     const currentStep = getByTestId('CurrentStep')
     expect(currentStep).toBeInTheDocument()
@@ -99,17 +127,24 @@ describe('CurrentStep component test', () => {
   })
 
   it('renders postPayment - FullyPaid component', () => {
-    const { getByTestId } = renderWithProviders(<CurrentStep onModalClose={() => {}} />, {
-      preloadedState: {
-        payment: {
-          product: { ...productMock, sharesTaken: 100 },
-          paymentType: PaymentTypeEnum.Paid,
-        },
-        user: {
-          currentUser: 'user@gmail.com',
+    const { getByTestId } = renderWithProviders(
+      <CurrentStep
+        onModalClose={() => {
+          console.log('')
+        }}
+      />,
+      {
+        preloadedState: {
+          payment: {
+            product: { ...productMock, sharesTaken: 100 },
+            paymentType: PaymentTypeEnum.Paid,
+          },
+          user: {
+            currentUser: 'user@gmail.com',
+          },
         },
       },
-    })
+    )
 
     const currentStep = getByTestId('CurrentStep')
     expect(currentStep).toBeInTheDocument()
@@ -117,17 +152,24 @@ describe('CurrentStep component test', () => {
   })
 
   it('renders postPayment - PaidPartially component', () => {
-    const { getByTestId } = renderWithProviders(<CurrentStep onModalClose={() => {}} />, {
-      preloadedState: {
-        payment: {
-          product: { ...productMock, sharesTaken: 10 },
-          paymentType: PaymentTypeEnum.PaidPartially,
-        },
-        user: {
-          currentUser: 'user@gmail.com',
+    const { getByTestId } = renderWithProviders(
+      <CurrentStep
+        onModalClose={() => {
+          console.log('')
+        }}
+      />,
+      {
+        preloadedState: {
+          payment: {
+            product: { ...productMock, sharesTaken: 10 },
+            paymentType: PaymentTypeEnum.PaidPartially,
+          },
+          user: {
+            currentUser: 'user@gmail.com',
+          },
         },
       },
-    })
+    )
 
     const currentStep = getByTestId('CurrentStep')
     expect(currentStep).toBeInTheDocument()
@@ -135,17 +177,24 @@ describe('CurrentStep component test', () => {
   })
 
   it('renders loader if data wasn"t provided', () => {
-    const { getByTestId } = renderWithProviders(<CurrentStep onModalClose={() => {}} />, {
-      preloadedState: {
-        payment: {
-          product: null,
-          paymentType: null,
-        },
-        user: {
-          currentUser: 'user@gmail.com',
+    const { getByTestId } = renderWithProviders(
+      <CurrentStep
+        onModalClose={() => {
+          console.log('')
+        }}
+      />,
+      {
+        preloadedState: {
+          payment: {
+            product: null,
+            paymentType: null,
+          },
+          user: {
+            currentUser: 'user@gmail.com',
+          },
         },
       },
-    })
+    )
 
     expect(getByTestId('spinner')).toBeInTheDocument()
   })
@@ -153,17 +202,38 @@ describe('CurrentStep component test', () => {
 
 describe('Main component test', () => {
   it('renders without crashing', () => {
-    renderWithProviders(<Main onModalClose={() => {}} />)
+    renderWithProviders(
+      <Main
+        onModalClose={() => {
+          console.log('')
+        }}
+      />,
+    )
   })
 
   it('logic works properly', () => {
-    const { getByTestId } = renderWithProviders(<Main onModalClose={() => {}} productId='1' price={3} currency='€' />)
+    const { getByTestId } = renderWithProviders(
+      <Main
+        onModalClose={() => {
+          console.log('')
+        }}
+        productId='1'
+        price={3}
+        currency='€'
+      />,
+    )
     const currentStep = getByTestId('CurrentStep')
     expect(currentStep).toBeInTheDocument()
   })
 
   it('shows spinner if data wasn"t provided', () => {
-    const { getByTestId } = renderWithProviders(<Main onModalClose={() => {}} />)
+    const { getByTestId } = renderWithProviders(
+      <Main
+        onModalClose={() => {
+          console.log('')
+        }}
+      />,
+    )
     expect(getByTestId('spinner')).toBeInTheDocument()
   })
 })
