@@ -47,7 +47,7 @@ export const FullyPaid: React.FC = () => {
   }, [product])
 
   return (
-    <Container>
+    <Container data-testid='FullyPaid'>
       <Title>{product?.title}</Title>
       <Image src={product?.image} alt={product?.imageAlt} />
       <InfoText>Congrats! {product?.title || product?.productId} is fully paid</InfoText>

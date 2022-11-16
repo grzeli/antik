@@ -38,7 +38,7 @@ export const CurrentStep: React.FC<CurrentStepProps> = (props) => {
   const modal = useMemo(
     () =>
       product && Object.keys(product)?.length ? (
-        <Modal withCloseIcon onClose={onClose}>
+        <Modal withCloseIcon onClose={onClose} data-testid='CurrentStep'>
           {!currentUser && <Authorization />}
           {!!currentUser && !paymentType && (!product.sharesTaken || product.sharesTaken < 100) && (
             <ProductPage {...product} />

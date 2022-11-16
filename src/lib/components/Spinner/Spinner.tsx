@@ -59,4 +59,4 @@ interface SpinnerProps {
   fontSize?: string
 }
 
-export const Spinner: React.FC<SpinnerProps> = (props) => <StyledSpinner {...props} />
+export const Spinner: React.FC<SpinnerProps> = (props) => <StyledSpinner {...props} data-testid='spinner' />

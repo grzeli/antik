@@ -75,7 +75,7 @@ export const PaidPartially: React.FC = () => {
   )
 
   return (
-    <Container>
+    <Container data-testid='PaidPartially'>
       <Title>{product?.title}</Title>
       <Image src={product?.image} alt={product?.imageAlt} />
       <InfoText>

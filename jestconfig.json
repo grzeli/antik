@@ -1,5 +1,8 @@
 
 {
+  "modulePathIgnorePatterns": [
+    "tests/utils.tsx"
+  ],
   "transform": {
     "^.+\\.(t|j)sx?$": "ts-jest"
   },

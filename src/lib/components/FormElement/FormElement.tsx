@@ -70,7 +70,15 @@ export const FormElement: React.FC<FormElementProps> = (props) => {
       <Label htmlFor={id} invalid={invalid}>
         {label}
       </Label>
-      <Input id={id} type={inputType} onChange={onChangeHandler} value={value} onBlur={onBlur} invalid={invalid} />
+      <Input
+        id={id}
+        type={inputType}
+        onChange={onChangeHandler}
+        value={value}
+        onBlur={onBlur}
+        invalid={invalid}
+        name={id}
+      />
       {validityText}
     </>
   )

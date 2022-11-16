@@ -221,7 +221,7 @@ export const Payment: React.FC = () => {
   )
 
   return (
-    <Container>
+    <Container data-testid='Payment'>
       <Title>{product?.title}</Title>
       <Image src={product?.image} alt={product?.imageAlt} />
       {sharesOutput}

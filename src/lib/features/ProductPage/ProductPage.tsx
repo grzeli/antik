@@ -104,9 +104,9 @@ export const ProductPage: React.FC<Product> = (props) => {
 
   const priceOutput = useMemo(
     () =>
-      (price as number) * rangeValue > 0 ? (
+      price * rangeValue > 0 ? (
         <Price>
-          {((price as number) * (rangeValue / 100)).toFixed(2)} {currency}
+          {(price * (rangeValue / 100)).toFixed(2)} {currency}
         </Price>
       ) : null,
     [price, rangeValue, currency],
@@ -119,7 +119,7 @@ export const ProductPage: React.FC<Product> = (props) => {
 
   const output = useMemo(
     () => (
-      <Container id={productId}>
+      <Container id={productId} data-testid='ProductPage'>
         <Title>{title || ''}</Title>
         <Image src={image} alt={imageAlt} />
         <Description>{description}</Description>
