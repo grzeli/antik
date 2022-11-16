@@ -1,5 +1,5 @@
 {
-  "include": ["src/lib"],
+  "include": ["src"],
   "exclude": [
     "dist",
     "node_modules"
@@ -9,8 +9,8 @@
     "lib": ["dom", "esnext"],
     "importHelpers": true,
     "declaration": true,
-    "inlineSourceMap": true,
-    "rootDir": "./src/lib",
+    "sourceMap": true,
+    "rootDir": "./src",
     "outDir": "./dist/esm",
     "strict": true,
     "noImplicitReturns": true,
